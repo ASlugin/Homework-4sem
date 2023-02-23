@@ -2,13 +2,12 @@
 
 // Returns new list with items in reverse order
 let reverseList list =
-    let newList = []
+    let rec fillNewList newList list =
+        match list with
+        | [] -> newList
+        | head :: rest -> fillNewList (head :: newList) rest
 
-    let rec recursiveReverseList list newList indexOfElement =
-        if indexOfElement >= List.length list then newList
-        else recursiveReverseList list (list.Item(indexOfElement) :: newList) (indexOfElement + 1)
-
-    recursiveReverseList list newList 0
+    fillNewList [] list
 
 
 // Creates list [2^n; 2^(n + 1); ...; 2^(n + m)]
