@@ -1,19 +1,18 @@
 ﻿open System
 
-printfn "%s" "Enter length of list:"
+printf "%s" "Enter length of list: "
 let length = Console.ReadLine() |> int
-printfn "%s" "Enter list items in one line:"
+printf "%s" "Enter list items in one line: "
 let input = Console.ReadLine().Split(" ")
 let list = List.init length (fun i -> input[i] |> int)
 
 // Returns new list with items in reverse order
 let reverseList list =
-    let newList = []
+    let rec fillNewList newList list =
+        match list with
+        | [] -> newList
+        | head :: rest -> fillNewList (head :: newList) rest
     
-    let rec recursiveReverseList list newList indexOfElement =
-        if indexOfElement >= List.length list then newList
-        else recursiveReverseList list (list.Item(indexOfElement) :: newList) (indexOfElement + 1)
+    fillNewList [] list
     
-    recursiveReverseList list newList 0
-
 printfn $"%A{reverseList list}"
