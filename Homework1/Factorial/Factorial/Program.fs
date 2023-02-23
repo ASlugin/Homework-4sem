@@ -3,9 +3,9 @@
 let input = Console.ReadLine()
 let intValue = input |> int
 
-// Counts factorial of the number; if number < 0, throws ArgumentException
+// Counts factorial of the number; if number is negative, throws ArgumentException
 let factorial number =
-    if number < 0 then raise(ArgumentException "Number less than zero")
+    if number < 0 then raise(ArgumentException("Number cannot be negative"))
     
     let rec countFactorial number multiplier =
         if number = 0 then 1
