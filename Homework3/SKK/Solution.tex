@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	
+
+\begin{document}
+
+\section{Task}
+\Large
+Доказать $S K K = I$
+
+\section{Solution}
+\begin{center}
+\Large
+$S K K = (\lambda x \ y \ z.x \ z \ (y \ z)) \ (\lambda x_1 \ y_1.x_1) \ (\lambda x_2 \ y_2.x_2)$ \\
+$\rightarrow_{\beta} \lambda z.((\lambda x_1 \ y_1.x_1) \ z \ ((\lambda x_2 \ y_2.x_2) \ z))$ \\
+$\rightarrow_{\beta} \lambda z.z = I$
+\end{center}
+\end{document}
