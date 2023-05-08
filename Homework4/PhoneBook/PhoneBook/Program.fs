@@ -55,11 +55,11 @@ let start =
             database |> List.iter (fun (phone:Phone) -> printfn $"{phone.Name} {phone.Number}")
             loop database
         | "5" ->
-            saveDataToFile database
+            saveDataToFile database "output.txt"
             printfn "Data saved to file"
             loop database
         | "6" ->
-            let newDatabase = readDataFromFile database
+            let newDatabase = readDataFromFile database "input.txt"
             printfn "Data read from file"
             loop newDatabase
         | _ ->

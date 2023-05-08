@@ -27,13 +27,13 @@ let findNameByNumber (database : list<Phone>) number =
     | Some value -> Some value.Name
     | None -> None
 
-let saveDataToFile (database : list<Phone>) =
-    use stream = new StreamWriter("output.txt")
-    database |> List.iter (fun entry -> stream.WriteLine($"{entry.Name} {entry.Number}")) 
+let saveDataToFile (database : list<Phone>) (path : string) = 
+    use stream = new StreamWriter(path)
+    database |> List.iter (fun entry -> stream.WriteLine($"{entry.Name} {entry.Number}"))
     ()
 
-let readDataFromFile (database : list<Phone>) =
-    use stream = new StreamReader("input.txt")
+let readDataFromFile (database : list<Phone>) (path : string) =
+    use stream = new StreamReader(path)
     
     let rec readLoop localDatabase =
         let str = stream.ReadLine()
@@ -43,5 +43,5 @@ let readDataFromFile (database : list<Phone>) =
             if splitLine.Length <> 2 then raise (invalidArg "Name and number" "Phone book entry should have two argument")
             let newDatabase, _ = addNewEntry localDatabase splitLine[0] splitLine[1]
             readLoop newDatabase
-            
+    
     readLoop database
