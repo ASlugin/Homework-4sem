@@ -1,0 +1,30 @@
+\documentclass{article}
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	
+
+\begin{document}
+
+\section{Task}
+\Large
+Привести к нормальной форме $\lambda$-терм  \\
+$
+((\lambda a.(\lambda b.b\ b) \ (\lambda b.b\ b)) \ b) \ ((\lambda c.(c \ b)) \ (\lambda a.a))
+$
+
+\section{Solution}
+\Large
+$
+((\lambda a.(\lambda b.b\ b) \ (\lambda b.b\ b)) \ b) \ ((\lambda c.(c \ b)) \ (\lambda a.a)) \\
+\rightarrow _{\beta} 
+((\lambda b.b\ b) \ (\lambda b.b\ b)) \ ((\lambda c.(c \ b)) \ (\lambda a.a)) \\
+\rightarrow _{\beta} 
+((\lambda b.b\ b) \ (\lambda b.b\ b)) \ ((\lambda a.a) \ b) \\
+\rightarrow _{\beta} 
+((\lambda b.b\ b) \ (\lambda b.b\ b)) \ b
+\equiv \Omega \ b
+$
+
+\end{document}
