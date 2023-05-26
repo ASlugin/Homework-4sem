@@ -1,9 +1,9 @@
-﻿module Lazy.ThreadsafeLazy
+﻿module Lazy.ThreadSafeLazy
 
 open System
 open Lazy.ILazy
 
-type ThreadsafeLazy<'T>(supplier: unit -> 'T) =
+type ThreadSafeLazy<'T>(supplier: unit -> 'T) =
     [<VolatileField>]
     let mutable instance = None
     let obj = Object ()
