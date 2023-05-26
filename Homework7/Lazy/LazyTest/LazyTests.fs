@@ -43,9 +43,10 @@ type MultiThreadLazyTests() =
         
         manualResetEvent.Reset() |> ignore
         let asyncTask = tasks |> Async.Parallel |> Async.StartAsTask
+        Thread.Sleep(500)
         manualResetEvent.Set() |> ignore
         
-        let resultValues = asyncTask |> Async.AwaitTask |> Async.RunSynchronously
+        let resultValues = asyncTask.Result
         let firstValue = Seq.item 0 resultValues
 
         resultValues |> Seq.forall (fun value -> obj.ReferenceEquals(value, firstValue)) |> should be True
