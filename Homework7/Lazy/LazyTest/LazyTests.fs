@@ -38,7 +38,7 @@ type OneThreadLazyTests() =
         
 [<TestFixture>]
 type MultiThreadLazyTests() =
-    let runTest (lazyObj : ILazy<string>) (manualResetEvent : ManualResetEvent) =
+    let runTest (lazyObj : ILazy<obj>) (manualResetEvent : ManualResetEvent) =
         let tasks = Seq.init 100 (fun _ -> async { return lazyObj.Get() })
         
         manualResetEvent.Reset() |> ignore
@@ -57,9 +57,9 @@ type MultiThreadLazyTests() =
         let supplier () =
             manualResetEvent.WaitOne() |> ignore
             Interlocked.Increment counter |> ignore
-            "qwerty"
+            obj()
     
-        let lazyObject = LazyFactory.CreateThreadSafeLazy<string>(supplier)
+        let lazyObject = LazyFactory.CreateThreadSafeLazy<obj>(supplier)
     
         runTest lazyObject manualResetEvent
         counter.Value |> should equal 1
@@ -69,8 +69,8 @@ type MultiThreadLazyTests() =
         let manualResetEvent = new ManualResetEvent(false)
         let supplier () =
             manualResetEvent.WaitOne() |> ignore
-            "test"
+            obj()
 
-        let lazyObject = LazyFactory.CreateLockFreeLazy<string>(supplier)
+        let lazyObject = LazyFactory.CreateLockFreeLazy<obj>(supplier)
         
         runTest lazyObject manualResetEvent
