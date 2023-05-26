@@ -4,6 +4,7 @@ open System.Threading
 open NUnit.Framework
 open FsUnit
 open Lazy.LazyFactory
+open Lazy.ILazy
 
 [<TestFixture>]
 type OneThreadLazyTests() =
@@ -34,22 +35,42 @@ type OneThreadLazyTests() =
         (simpleLazy.Get(), threadSafeLazy.Get(), lockFreeLazy.Get()) |> should equal (107, 107, 107)
         callCount |> should equal 3
         
-
-[<Test>]
-let multiThreadLazyTest () =
-    let mutable a = 12345
-    let supplier () =
-        a <- 54321
-        Thread.Sleep(100)
-        a
         
-    let lockFreeLazy = LazyFactory.CreateLockFreeLazy(supplier)
-    let threadSafeLazy = LazyFactory.CreateThreadSafeLazy(supplier)
+[<TestFixture>]
+type MultiThreadLazyTests() =
+    let runTest (lazyObj : ILazy<string>) (manualResetEvent : ManualResetEvent) =
+        let tasks = Seq.init 100 (fun _ -> async { return lazyObj.Get() })
+        
+        manualResetEvent.Reset() |> ignore
+        let resultAsync = tasks |> Async.Parallel
+        manualResetEvent.Set() |> ignore
+        
+        let resultValues = resultAsync |> Async.RunSynchronously
+        let firstValue = Seq.item 0 resultValues
 
-    let getters = Seq.init 100 (fun _ ->
-        async { lockFreeLazy.Get() |> should equal 54321
-                threadSafeLazy.Get() |> should equal 54321 }
-        )
+        resultValues |> Seq.forall (fun value -> obj.ReferenceEquals(value, firstValue)) |> should be True
+
+    [<Test>]
+    member this.ThreadSafeLazyTest () =
+        let manualResetEvent = new ManualResetEvent(false)
+        let counter = ref 0
+        let supplier () =
+            manualResetEvent.WaitOne() |> ignore
+            Interlocked.Increment counter |> ignore
+            "qwerty"
     
-    getters |> Async.Parallel |> Async.RunSynchronously |> ignore
-    a |> should equal 54321
+        let lazyObject = LazyFactory.CreateThreadSafeLazy<string>(supplier)
+    
+        runTest lazyObject manualResetEvent
+        counter.Value |> should equal 1
+
+    [<Test>]
+    member this.LockFreeTest () =
+        let manualResetEvent = new ManualResetEvent(false)
+        let supplier () =
+            manualResetEvent.WaitOne() |> ignore
+            "test"
+
+        let lazyObject = LazyFactory.CreateLockFreeLazy<string>(supplier)
+        
+        runTest lazyObject manualResetEvent
