@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MiniCrawler", "MiniCrawler\MiniCrawler.fsproj", "{0B8A6326-4965-4E22-9B38-082D45F6FF56}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MiniCrawlerTest", "MiniCrawlerTest\MiniCrawlerTest.fsproj", "{49C643D7-7450-4218-9D0F-B924C91816F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B8A6326-4965-4E22-9B38-082D45F6FF56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8A6326-4965-4E22-9B38-082D45F6FF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8A6326-4965-4E22-9B38-082D45F6FF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8A6326-4965-4E22-9B38-082D45F6FF56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49C643D7-7450-4218-9D0F-B924C91816F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49C643D7-7450-4218-9D0F-B924C91816F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49C643D7-7450-4218-9D0F-B924C91816F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49C643D7-7450-4218-9D0F-B924C91816F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
